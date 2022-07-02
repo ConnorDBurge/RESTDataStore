@@ -17,6 +17,7 @@ const userTypeDefs = gql`
         website: String
         company: Company
         posts: [Post!]!
+        albums: [Album!]!
     }
 
     type Address {
@@ -50,7 +51,10 @@ const userResolvers = {
     },
     User: {
         posts: async (parent, args, { dataSources }) => {
-            return dataSources.postAPI.getPosts({ userId: parent.id })
+            return dataSources.postAPI.getPosts(args, { userId: parent.id })
+        },
+        albums: async (parent, args, { dataSources }) => {
+            return dataSources.albumAPI.getAlbums(args, { userId: parent.id })
         }
     }
 }

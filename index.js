@@ -6,6 +6,8 @@ const ToDoAPI = require('./services/todo')
 const UserAPI = require('./services/user')
 const PostAPI = require('./services/post')
 const CommentAPI = require('./services/comment')
+const AlbumAPI = require('./services/album')
+const PhotoAPI = require('./services/photo')
 
 const expressed = async () => {
     const app = express()
@@ -18,6 +20,8 @@ const expressed = async () => {
                 userAPI: new UserAPI(),
                 postAPI: new PostAPI(),
                 commentAPI: new CommentAPI(),
+                albumAPI: new AlbumAPI(),
+                photoAPI: new PhotoAPI(),
             }
         }
     })
