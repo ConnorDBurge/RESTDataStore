@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express')
 const albumTypeDefs = gql`
     extend type Query {
         albums: [Album!]!
+        album(userId: Int!, albumId: Int!): Album!
     }
 
     type Album {
@@ -17,6 +18,9 @@ const albumResolvers = {
     Query: {
         albums: async (_, args, { dataSources }) => {
             return await dataSources.albumAPI.getAlbums(args)
+        },
+        album: async (_, args, { dataSources }) => {
+            return await dataSources.albumAPI.getAlbum(args)
         }
     },
     Album: {

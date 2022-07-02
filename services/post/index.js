@@ -7,10 +7,11 @@ class PostAPI extends RESTDataSource {
         this.baseURL = 'https://jsonplaceholder.typicode.com/posts'
     }
 
-    async getPosts(args, parent) {
+    async getPosts({ limit }, parent) {
         const data = await this.get('')
         const userId = parent?.userId
-        return userId ? filter(data, { userId }) : data
+        const userPosts = userId ? filter(data, { userId }) : data
+        return limit ? userPosts.splice(0, limit) : userPosts
     }
 }
 

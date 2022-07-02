@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-express')
 
 const postTypeDefs = gql`
     extend type Query {
-        posts(userId: Int): [Post!]!
+        posts(limit: Int): [Post!]!
     }
 
     type Post {

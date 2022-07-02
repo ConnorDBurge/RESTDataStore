@@ -12,6 +12,12 @@ class AlbumAPI extends RESTDataSource {
         const userId = parent?.userId
         return userId ? filter(data, { userId }) : data
     }
+
+    async getAlbum({ userId, albumId }) {
+        const data = await this.get('')
+        return data.find(album =>
+            album.userId === userId && album.id === albumId)
+    }
 }
 
 module.exports = AlbumAPI

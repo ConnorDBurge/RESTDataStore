@@ -8,12 +8,13 @@ class UserAPI extends RESTDataSource {
 
     async getUsers({ limit }) {
         const data = await this.get('')
-        return data.slice(0, limit)
+        return limit ? data.slice(0, limit) : data
     }
 
-    async getUser({ username }) {
+    async getUser({ userId, username }) {
         const data = await this.get('')
-        return data.find(user => user.username === username)
+        if (userId) return data.find(user => user.id === userId)
+        if (!userId && username) return data.find(user => user.username === username)
     }
 }
 

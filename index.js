@@ -29,7 +29,7 @@ const expressed = async () => {
     await server.start()
     server.applyMiddleware({ app, path: '/graphql' })
 
-    app.listen({ port: 4001 }, () => {
+    app.listen({ port: 4001 }, (port) => {
         console.log(`Server started at http://localhost:4001${server.graphqlPath}`)
     })
 }
