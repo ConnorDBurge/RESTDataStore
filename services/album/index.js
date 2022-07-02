@@ -7,16 +7,15 @@ class AlbumAPI extends RESTDataSource {
         this.baseURL = 'https://jsonplaceholder.typicode.com/albums'
     }
 
-    async getAlbums(args, parent) {
+    async getAlbums({ limit }, parent) {
         const data = await this.get('')
         const userId = parent?.userId
-        return userId ? filter(data, { userId }) : data
+        const albums = userId ? filter(data, { userId }) : data
+        return limit ? albums.splice(0, limit) : albums
     }
 
-    async getAlbum({ userId, albumId }) {
-        const data = await this.get('')
-        return data.find(album =>
-            album.userId === userId && album.id === albumId)
+    async getAlbum({ albumId }) {
+        return await this.get(`${baseURL}/${albumId}`)
     }
 }
 

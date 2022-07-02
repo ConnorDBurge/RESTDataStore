@@ -7,10 +7,15 @@ class CommentAPI extends RESTDataSource {
         this.baseURL = 'https://jsonplaceholder.typicode.com/comments'
     }
 
-    async getComments(args, parent) {
+    async getComments({ limit }, parent) {
         const data = await this.get('')
         const postId = parent?.postId
-        return postId ? filter(data, { postId }) : data
+        const postComments = postId ? filter(data, { postId }) : data
+        return limit ? postComments.splice(0, limit) : postComments
+    }
+
+    async getComment({ commentId }) {
+        return await this.get(`${this.baseURL}/${commentId}`)
     }
 }
 

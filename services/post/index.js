@@ -10,8 +10,12 @@ class PostAPI extends RESTDataSource {
     async getPosts({ limit }, parent) {
         const data = await this.get('')
         const userId = parent?.userId
-        const userPosts = userId ? filter(data, { userId }) : data
-        return limit ? userPosts.splice(0, limit) : userPosts
+        const posts = userId ? filter(data, { userId }) : data
+        return limit ? posts.splice(0, limit) : posts
+    }
+
+    async getPost({ postId }) {
+        return await this.get(`${this.baseURL}/${postId}`)
     }
 }
 

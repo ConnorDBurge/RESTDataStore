@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express')
 const userTypeDefs = gql`
 
     type Query {
-        users(limit: Int): [User!]!
+        users(limit: Int = 10): [User!]!
         user(userId: Int, username: String): User
     }
 
@@ -16,8 +16,9 @@ const userTypeDefs = gql`
         phone: String
         website: String
         company: Company
-        posts: [Post!]!
-        albums: [Album!]!
+        posts(limit: Int = 10): [Post!]!
+        albums(limit: Int = 10) : [Album!]!
+        todos(limit: Int = 10) : [ToDo!]!
     }
 
     type Address {
@@ -55,6 +56,9 @@ const userResolvers = {
         },
         albums: async (parent, args, { dataSources }) => {
             return dataSources.albumAPI.getAlbums(args, { userId: parent.id })
+        },
+        todos: async (parent, args, { dataSources }) => {
+            return dataSources.todosAPI.getTodos(args, { userId: parent.id })
         }
     }
 }

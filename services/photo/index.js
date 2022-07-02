@@ -7,10 +7,15 @@ class PhotoAPI extends RESTDataSource {
         this.baseURL = 'https://jsonplaceholder.typicode.com/photos'
     }
 
-    async getPhotos(args, parent) {
+    async getPhotos({ limit }, parent) {
         const data = await this.get('')
         const albumId = parent?.albumId
-        return albumId ? filter(data, { albumId }) : data
+        const photos = albumId ? filter(data, { albumId }) : data
+        return limit ? photos.splice(0, limit) : photos
+    }
+
+    async getPhoto({ photoId }) {
+        return await this.get(`${this.baseURL}/${photoId}`)
     }
 }
 

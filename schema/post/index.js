@@ -2,7 +2,8 @@ const { gql } = require('apollo-server-express')
 
 const postTypeDefs = gql`
     extend type Query {
-        posts(limit: Int): [Post!]!
+        posts(limit: Int = 10): [Post!]!
+        post(postId: Int!): Post!
     }
 
     type Post {
@@ -10,7 +11,7 @@ const postTypeDefs = gql`
         id: Int
         title: String
         body: String
-        comments: [Comment!]!
+        comments(limit: Int = 10): [Comment!]!
     }
 `
 
@@ -18,6 +19,9 @@ const postResolvers = {
     Query: {
         posts: async (_, args, { dataSources }) => {
             return dataSources.postAPI.getPosts(args)
+        },
+        post: async (_, args, { dataSources }) => {
+            return dataSources.postAPI.getPost(args)
         }
     },
     Post: {

@@ -7,18 +7,15 @@ class ToDoAPI extends RESTDataSource {
         this.baseURL = 'https://jsonplaceholder.typicode.com/todos/'
     }
 
-    async getToDos({ limit }) {
+    async getToDos({ limit }, parent) {
         const data = await this.get('')
-        return data.slice(0, limit)
+        const userId = parent?.userId
+        const todos = userId ? filter(data, { userId }) : data
+        return limit ? todos.splice(0, limit) : todos
     }
 
     async getToDo({ id }) {
         return await this.get(`${this.baseURL}/${id}`)
-    }
-
-    async getUserTodos({ userId, limit }) {
-        const data = await this.get('')
-        return filter(data, { userId }).slice(0, limit)
     }
 }
 
