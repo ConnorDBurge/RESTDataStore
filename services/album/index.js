@@ -1,5 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest')
-const { filter } = require('lodash')
+const { filter, slice } = require('lodash')
 
 class AlbumAPI extends RESTDataSource {
     constructor() {
@@ -7,15 +7,15 @@ class AlbumAPI extends RESTDataSource {
         this.baseURL = 'https://jsonplaceholder.typicode.com/albums'
     }
 
-    async getAlbums({ limit }, parent) {
+    async getAlbums(args, parent) {
         const data = await this.get('')
         const userId = parent?.userId
         const albums = userId ? filter(data, { userId }) : data
-        return limit ? albums.splice(0, limit) : albums
+        return args?.limit ? slice(0, args?.limit) : albums
     }
 
     async getAlbum({ albumId }) {
-        return await this.get(`${baseURL}/${albumId}`)
+        return await this.get(`${this.baseURL}/${albumId}`)
     }
 }
 

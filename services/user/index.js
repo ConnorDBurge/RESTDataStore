@@ -8,7 +8,7 @@ class UserAPI extends RESTDataSource {
 
     async getUsers({ limit }) {
         const data = await this.get('')
-        return limit ? data.slice(0, limit) : data
+        return limit ? data.splice(0, limit) : data
     }
 
     async getUser({ userId, username }) {
